@@ -9,49 +9,49 @@ export default function Footer() {
               GPULaw
             </h3>
             <p className="text-gray-400 mb-4 text-sm">
-              AI-powered legal protection backed by licensed attorneys.
-              Making legal services accessible and affordable for everyone.
+              由持证律师支持的AI驱动法律保护。
+              让每个人都能获得便捷且平价的法律服务。
             </p>
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
               </svg>
-              <span>Confidential & Secure</span>
+              <span>保密且安全</span>
             </div>
           </div>
 
           {/* Practice Areas */}
           <div>
-            <h4 className="text-lg font-bold mb-4">Practice Areas</h4>
+            <h4 className="text-lg font-bold mb-4">业务领域</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="#practice-areas" className="text-gray-400 hover:text-white transition-colors">
-                  Family Law
+                  婚姻家庭
                 </a>
               </li>
               <li>
                 <a href="#practice-areas" className="text-gray-400 hover:text-white transition-colors">
-                  Consumer & Debt
+                  劳动纠纷
                 </a>
               </li>
               <li>
                 <a href="#practice-areas" className="text-gray-400 hover:text-white transition-colors">
-                  Housing & Landlord-Tenant
+                  房产纠纷
                 </a>
               </li>
               <li>
                 <a href="#practice-areas" className="text-gray-400 hover:text-white transition-colors">
-                  Wills, Estates & Probate
+                  合同纠纷
                 </a>
               </li>
               <li>
                 <a href="#practice-areas" className="text-gray-400 hover:text-white transition-colors">
-                  Immigration
+                  交通事故
                 </a>
               </li>
               <li>
                 <a href="#practice-areas" className="text-gray-400 hover:text-white transition-colors">
-                  Traffic Cases
+                  知识产权
                 </a>
               </li>
             </ul>
@@ -59,36 +59,36 @@ export default function Footer() {
 
           {/* Resources */}
           <div>
-            <h4 className="text-lg font-bold mb-4">Resources</h4>
+            <h4 className="text-lg font-bold mb-4">资源</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="#how-it-works" className="text-gray-400 hover:text-white transition-colors">
-                  How It Works
+                  工作原理
                 </a>
               </li>
               <li>
                 <a href="#membership" className="text-gray-400 hover:text-white transition-colors">
-                  Pricing
+                  价格
                 </a>
               </li>
               <li>
                 <a href="#get-help" className="text-gray-400 hover:text-white transition-colors">
-                  Get Help Now
+                  立即获取帮助
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Legal Knowledge Base
+                  法律知识库
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  AI Legal Assistant
+                  AI法律助手
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Attorney Network
+                  律师网络
                 </a>
               </li>
             </ul>
@@ -96,7 +96,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-lg font-bold mb-4">Contact Us</h4>
+            <h4 className="text-lg font-bold mb-4">联系我们</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <svg className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -120,8 +120,8 @@ export default function Footer() {
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
                 </svg>
                 <span className="text-gray-400">
-                  24/7 AI Support<br/>
-                  <span className="text-xs">Mon-Fri 9am-6pm Attorney Support</span>
+                  24/7 AI支持<br/>
+                  <span className="text-xs">周一至周五 9am-6pm 律师支持</span>
                 </span>
               </li>
             </ul>
@@ -154,17 +154,17 @@ export default function Footer() {
               <svg className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
               </svg>
-              <span className="min-w-0">Important Legal Disclaimer</span>
+              <span className="min-w-0">重要法律免责声明</span>
             </h4>
             <p className="text-xs text-gray-400 leading-relaxed">
-              <strong className="text-white">GPULaw is not a law firm</strong> and does not provide legal advice.
-              The AI-powered tools and information provided through this platform are for general informational purposes only
-              and should not be construed as legal advice. The use of GPULaw does not create an attorney-client relationship
-              except when you are connected with a licensed attorney through our platform. Licensed attorneys in our network
-              are independent practitioners and are solely responsible for the legal services they provide. Results may vary.
-              Past performance is not indicative of future results. GPULaw membership provides access to tools and attorney
-              consultations but does not guarantee any specific legal outcome. Always consult with a qualified attorney
-              licensed in your jurisdiction for advice on your specific legal matter.
+              <strong className="text-white">GPULaw是法律信息服务平台，不是律师事务所</strong>，平台本身不提供法律服务或法律建议。
+              本平台提供的AI驱动工具和信息仅供一般法律知识参考，不应被解释为专业法律意见或建议。
+              使用GPULaw平台不会建立律师-委托人关系，除非您通过我们的平台与具有中华人民共和国执业资格的律师建立正式委托关系。
+              平台合作的执业律师是独立执业者，对其提供的法律服务独立承担责任。
+              法律结果因案件具体情况而异，过往案例不代表未来结果。
+              GPULaw会员服务提供法律信息工具和律师咨询渠道，但不保证任何特定的法律结果。
+              如您有具体法律问题，请务必咨询具有执业资格的专业律师，以获得针对您具体情况的法律建议。
+              本平台服务遵守中华人民共和国相关法律法规。
             </p>
           </div>
         </div>
@@ -177,19 +177,19 @@ export default function Footer() {
             </p>
             <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Privacy Policy
+                隐私政策
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Terms of Service
+                服务条款
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Attorney Network Terms
+                律师网络条款
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Accessibility
+                无障碍访问
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Cookie Policy
+                Cookie政策
               </a>
             </div>
           </div>
@@ -197,10 +197,10 @@ export default function Footer() {
           {/* Additional Compliance Info */}
           <div className="mt-4 sm:mt-6 text-center px-2">
             <p className="text-xs text-gray-500">
-              GPULaw platform operated by GPULaw Technologies, Inc. | Licensed attorneys are independently responsible for their services
+              GPULaw平台由GPULaw Technologies, Inc.运营 | 执业律师对其法律服务独立承担责任
               <br className="hidden sm:inline"/>
               <span className="sm:hidden"> </span>
-              AI technology powered by advanced language models | Attorney network includes lawyers licensed in all 50 states
+              AI技术由先进语言模型驱动 | 合作律师网络包括具有中华人民共和国执业资格的专业律师 | 服务遵守相关法律法规
             </p>
           </div>
         </div>

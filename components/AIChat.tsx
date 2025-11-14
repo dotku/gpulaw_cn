@@ -14,7 +14,7 @@ export default function AIChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hello! I'm Richard Law AI, your legal assistant. I can help you with questions about Family Law, Consumer & Debt, Housing, Wills & Estates, Immigration, and Traffic Cases. How can I assist you today?\n\n*Please note: I provide general legal information, not legal advice. For specific legal matters, you should consult with a licensed attorney.*",
+      content: "您好！我是理查德法律AI，您的法律助手。我可以帮助您解答有关婚姻家庭、劳动纠纷、房产纠纷、合同纠纷、交通事故和知识产权的问题。我今天能为您提供什么帮助？\n\n*请注意：我提供一般法律信息，而非专业法律建议。对于具体法律事务，您应咨询持证律师。*",
       timestamp: new Date(),
     },
   ]);
@@ -22,11 +22,11 @@ export default function AIChat() {
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([
-    "How do I file for divorce?",
-    "What are my rights as a tenant?",
-    "How can I dispute a credit card debt?",
-    "What documents do I need for a will?",
-    "How do I fight a traffic ticket?",
+    "离婚后财产如何分割？",
+    "被公司违法解雇怎么办？",
+    "房屋买卖合同纠纷如何处理？",
+    "交通事故责任如何认定？",
+    "如何保护我的商标权？",
   ]);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -59,6 +59,15 @@ export default function AIChat() {
     setInput('');
     setLoading(true);
 
+    // Add a placeholder assistant message for streaming
+    const assistantMessageIndex = messages.length + 1;
+    const assistantMessage: Message = {
+      role: 'assistant',
+      content: '',
+      timestamp: new Date(),
+    };
+    setMessages((prev) => [...prev, assistantMessage]);
+
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
@@ -77,28 +86,63 @@ export default function AIChat() {
         throw new Error('Failed to get response');
       }
 
-      const data = await response.json();
+      // Handle streaming response
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
 
-      const assistantMessage: Message = {
-        role: 'assistant',
-        content: data.response,
-        timestamp: new Date(),
-      };
+      if (!reader) {
+        throw new Error('No reader available');
+      }
 
-      setMessages((prev) => [...prev, assistantMessage]);
+      let streamedContent = '';
 
-      // Generate new suggested questions based on the conversation
-      if (data.suggestedQuestions && Array.isArray(data.suggestedQuestions)) {
-        setSuggestedQuestions(data.suggestedQuestions);
+      while (true) {
+        const { done, value } = await reader.read();
+
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+
+              if (data.content) {
+                // Append streaming content
+                streamedContent += data.content;
+                setMessages((prev) => {
+                  const newMessages = [...prev];
+                  newMessages[assistantMessageIndex] = {
+                    ...newMessages[assistantMessageIndex],
+                    content: streamedContent,
+                  };
+                  return newMessages;
+                });
+              }
+
+              if (data.done && data.suggestedQuestions) {
+                // Update suggested questions when streaming is complete
+                setSuggestedQuestions(data.suggestedQuestions);
+              }
+            } catch (parseError) {
+              console.error('Failed to parse streaming data:', parseError);
+            }
+          }
+        }
       }
     } catch (error) {
       console.error('Chat error:', error);
-      const errorMessage: Message = {
-        role: 'assistant',
-        content: 'I apologize, but I encountered an error. Please try again or contact support if the issue persists.',
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
+      setMessages((prev) => {
+        const newMessages = [...prev];
+        newMessages[assistantMessageIndex] = {
+          role: 'assistant',
+          content: '抱歉，我遇到了错误。请重试，如果问题持续存在，请联系支持团队。',
+          timestamp: new Date(),
+        };
+        return newMessages;
+      });
     } finally {
       setLoading(false);
     }
@@ -113,10 +157,10 @@ export default function AIChat() {
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
-            Chat with Richard Law AI
+            与理查德法律AI对话
           </h2>
           <p className="text-lg sm:text-xl text-gray-600">
-            Get instant legal guidance powered by advanced AI
+            获得由先进AI驱动的即时法律指导
           </p>
         </div>
 
@@ -130,10 +174,10 @@ export default function AIChat() {
               </svg>
             </div>
             <div className="min-w-0 flex-1">
-              <h3 className="text-white font-bold text-base sm:text-lg truncate">Richard Law AI</h3>
+              <h3 className="text-white font-bold text-base sm:text-lg truncate">理查德法律AI</h3>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <p className="text-blue-100 text-xs sm:text-sm">Online • Ready to help</p>
+                <p className="text-blue-100 text-xs sm:text-sm">在线 • 随时为您服务</p>
               </div>
             </div>
           </div>
@@ -157,7 +201,7 @@ export default function AIChat() {
                       <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
                       </svg>
-                      <span className="text-xs font-semibold text-gray-600">Richard Law AI</span>
+                      <span className="text-xs font-semibold text-gray-600">理查德法律AI</span>
                     </div>
                   )}
 
@@ -198,7 +242,7 @@ export default function AIChat() {
           {/* Suggested Questions */}
           <div className="h-[140px] sm:h-[160px] border-t-2 border-gray-200">
             <div className="px-3 py-3 sm:px-4 sm:py-4 md:px-6 md:py-4 bg-blue-50 h-full overflow-y-auto">
-              <p className="text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">Suggested questions:</p>
+              <p className="text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">建议问题：</p>
               <div className="flex flex-wrap gap-2">
                 {suggestedQuestions.map((question, index) => (
                   <button
@@ -220,7 +264,7 @@ export default function AIChat() {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your legal question..."
+                placeholder="输入您的法律问题..."
                 disabled={loading}
                 className="flex-1 px-3 py-3 sm:px-4 sm:py-3 md:px-6 md:py-4 border-2 border-gray-300 rounded-lg sm:rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all disabled:bg-gray-100 text-sm sm:text-base"
               />
@@ -229,14 +273,14 @@ export default function AIChat() {
                 disabled={loading || !input.trim()}
                 className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-950 hover:to-blue-800 text-white font-bold px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 rounded-lg sm:rounded-xl shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 sm:gap-2 flex-shrink-0"
               >
-                <span className="hidden sm:inline">Send</span>
+                <span className="hidden sm:inline">发送</span>
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
                 </svg>
               </button>
             </div>
             <p className="text-xs text-gray-500 mt-2 sm:mt-3 text-center leading-relaxed">
-              This chat provides general legal information, not legal advice. For personalized guidance, consult with a licensed attorney.
+              此对话提供一般法律信息，而非法律建议。如需个性化指导，请咨询持证律师。
             </p>
           </form>
         </div>
@@ -249,8 +293,8 @@ export default function AIChat() {
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
               </svg>
             </div>
-            <h4 className="font-bold text-gray-900 mb-2">24/7 Availability</h4>
-            <p className="text-sm text-gray-600">Get instant legal guidance anytime, day or night</p>
+            <h4 className="font-bold text-gray-900 mb-2">24/7全天候服务</h4>
+            <p className="text-sm text-gray-600">随时获得即时法律指导，日夜无休</p>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-200 text-center">
@@ -259,8 +303,8 @@ export default function AIChat() {
                 <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
               </svg>
             </div>
-            <h4 className="font-bold text-gray-900 mb-2">Fully Confidential</h4>
-            <p className="text-sm text-gray-600">Your conversations are private and encrypted</p>
+            <h4 className="font-bold text-gray-900 mb-2">完全保密</h4>
+            <p className="text-sm text-gray-600">您的对话内容私密且加密</p>
           </div>
 
           <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-200 text-center">
@@ -269,8 +313,8 @@ export default function AIChat() {
                 <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
               </svg>
             </div>
-            <h4 className="font-bold text-gray-900 mb-2">Expert Knowledge</h4>
-            <p className="text-sm text-gray-600">Trained on extensive legal resources and case law</p>
+            <h4 className="font-bold text-gray-900 mb-2">专业知识</h4>
+            <p className="text-sm text-gray-600">基于大量法律资源和案例法进行训练</p>
           </div>
         </div>
       </div>

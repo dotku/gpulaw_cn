@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GPULaw - AI-Powered Legal Assistance | Attorney Network",
-  description: "GPULaw combines advanced AI legal assistance with licensed attorneys. Get instant legal guidance across Family Law, Consumer & Debt, Housing, Immigration, and more. 24/7 AI support with attorney consultation available.",
-  keywords: ["legal AI", "attorney consultation", "legal assistance", "AI lawyer", "legal help", "family law", "immigration lawyer", "consumer debt", "GPULaw"],
+  title: "GPULaw - AI驱动的法律援助 | 律师网络",
+  description: "GPULaw结合先进的AI法律援助与执业律师。在家庭法、消费者债务、住房、移民等领域获得即时法律指导。提供24/7 AI支持和律师咨询服务。",
+  keywords: ["法律AI", "律师咨询", "法律援助", "AI律师", "法律帮助", "家庭法", "移民律师", "消费者债务", "GPULaw"],
   authors: [{ name: "GPULaw Technologies, Inc." }],
   creator: "GPULaw Technologies, Inc.",
   publisher: "GPULaw Technologies, Inc.",
@@ -26,17 +26,17 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "GPULaw - AI-Powered Legal Assistance",
-    description: "Affordable legal membership combining AI tools with experienced attorneys",
+    title: "GPULaw - AI驱动的法律援助",
+    description: "将AI工具与经验丰富的律师相结合的平价法律会员服务",
     url: '/',
     siteName: "GPULaw",
     type: "website",
-    locale: "en_US",
+    locale: "zh_CN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "GPULaw - AI-Powered Legal Assistance",
-    description: "Get instant legal guidance with AI + attorney access",
+    title: "GPULaw - AI驱动的法律援助",
+    description: "通过AI + 律师服务获得即时法律指导",
     creator: "@gpulaw",
   },
   robots: {
@@ -72,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="zh">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

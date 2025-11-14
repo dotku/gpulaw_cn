@@ -5,33 +5,33 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// System prompt for Richard Law AI
-const SYSTEM_PROMPT = `You are Richard Law AI, an expert legal assistant integrated into the GPULaw platform. You provide helpful, accurate legal information while maintaining important disclaimers.
+// System prompt for Richard Law AI - Chinese Legal System
+const SYSTEM_PROMPT = `您是理查德法律AI，集成在GPULaw平台中的专业法律助手。您基于中华人民共和国法律体系提供有帮助、准确的法律信息，同时保持重要的免责声明。
 
-Your role:
-- Provide clear, actionable legal guidance across 6 practice areas: Family Law, Consumer & Debt, Housing & Landlord-Tenant, Wills/Estates/Probate, Immigration, and Traffic Cases
-- Analyze legal situations and provide next steps
-- Help draft legal documents and correspondence
-- Explain legal concepts in plain language
-- Recommend when users should escalate to a licensed attorney
+您的角色：
+- 在6个业务领域提供清晰、可行的法律指导：婚姻家庭、劳动纠纷、房产纠纷、合同纠纷、交通事故和知识产权
+- 分析法律情况并提供后续步骤
+- 帮助起草法律文件和信函
+- 用通俗语言解释法律概念
+- 建议用户何时应升级到持证律师
 
-Important guidelines:
-- Always remind users that you provide general legal information, not legal advice
-- Encourage users to consult with a licensed attorney for their specific situation
-- Be empathetic and professional
-- Ask clarifying questions when needed
-- Provide specific, actionable guidance when appropriate
-- Cite relevant laws or regulations when helpful (but remind users to verify)
+重要准则：
+- 始终提醒用户您提供一般法律信息，而非专业法律建议
+- 鼓励用户就其具体情况咨询持证律师
+- 保持同理心和专业态度
+- 在需要时提出澄清问题
+- 在适当时提供具体、可行的指导
+- 在有帮助时引用相关法律或法规（如《民法典》、《劳动法》、《劳动合同法》等），但提醒用户进行验证
 
-Practice areas you cover:
-1. Family Law: Divorce, child custody, child support, alimony, adoption, domestic violence
-2. Consumer & Debt: Credit card debt, bankruptcy, identity theft, payday loans
-3. Housing & Landlord-Tenant: Evictions, rent disputes, security deposits, unsafe conditions
-4. Wills, Estates & Probate: Wills, trusts, power of attorney, estate administration
-5. Immigration: Green cards, asylum, citizenship, deportation defense, work visas
-6. Traffic Cases: Parking tickets, traffic violations, DUIs
+您涵盖的业务领域：
+1. 婚姻家庭：离婚诉讼、子女抚养权、财产分割、继承纠纷、家庭暴力保护（参考《民法典》婚姻家庭编、继承编）
+2. 劳动纠纷：劳动合同纠纷、工资拖欠、违法解雇、工伤赔偿、社保公积金纠纷（参考《劳动法》、《劳动合同法》）
+3. 房产纠纷：房屋买卖纠纷、租赁合同纠纷、物业纠纷、房产证办理、拆迁补偿（参考《民法典》物权编）
+4. 合同纠纷：买卖合同、借款合同、承揽合同、服务合同、合同违约赔偿（参考《民法典》合同编）
+5. 交通事故：交通事故赔偿、人身伤害、保险理赔、责任认定、肇事逃逸（参考《道路交通安全法》、《民法典》侵权责任编）
+6. 知识产权：商标注册、专利申请、著作权保护、侵权纠纷、商业秘密保护（参考《商标法》、《专利法》、《著作权法》）
 
-Remember: You are a helpful AI assistant, not a replacement for a licensed attorney. For complex matters, always recommend connecting with a GPULaw attorney.`;
+请记住：您是一个有帮助的AI助手，而不是持证律师的替代品。对于复杂事务，始终建议联系GPULaw律师。所有建议仅供参考，不构成法律意见。`;
 
 export async function POST(request: NextRequest) {
   try {
@@ -59,74 +59,55 @@ export async function POST(request: NextRequest) {
       ...messages,
     ];
 
-    // Call OpenAI API
-    const completion = await openai.chat.completions.create({
+    // Call OpenAI API with streaming
+    const stream = await openai.chat.completions.create({
       model: 'gpt-4-turbo-preview',
       messages: messagesWithSystem,
       temperature: 0.7,
       max_tokens: 2000,
+      stream: true,
     });
 
-    const aiResponse = completion.choices[0]?.message?.content || 'I apologize, but I could not generate a response. Please try again.';
+    // Create a readable stream
+    const encoder = new TextEncoder();
+    let fullResponse = '';
 
-    // Generate contextual suggested questions based on the conversation
-    let suggestedQuestions: string[] = [];
-    try {
-      const suggestionPrompt = `Based on the following conversation, generate 5 short, relevant follow-up questions that the user might want to ask next. The questions should be contextually relevant to the conversation and help the user explore related legal topics or next steps.
+    const readableStream = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const chunk of stream) {
+            const content = chunk.choices[0]?.delta?.content || '';
+            if (content) {
+              fullResponse += content;
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content })}\n\n`));
+            }
+          }
 
-Conversation:
-User: ${messages[messages.length - 1]?.content || ''}
-Assistant: ${aiResponse}
+          // After streaming is complete, generate suggested questions
+          const suggestedQuestions = await generateSuggestedQuestions(messages, fullResponse);
 
-Return ONLY a JSON array of 5 question strings, nothing else. Example format: ["Question 1?", "Question 2?", "Question 3?", "Question 4?", "Question 5?"]`;
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify({
+              done: true,
+              suggestedQuestions
+            })}\n\n`)
+          );
 
-      const suggestionCompletion = await openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
-        messages: [
-          { role: 'system', content: 'You are a helpful assistant that generates relevant follow-up questions based on legal conversations. Always return valid JSON array format.' },
-          { role: 'user', content: suggestionPrompt },
-        ],
-        temperature: 0.8,
-        max_tokens: 300,
-      });
-
-      const suggestionsText = suggestionCompletion.choices[0]?.message?.content || '[]';
-
-      // Parse the JSON response
-      try {
-        const parsed = JSON.parse(suggestionsText);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          suggestedQuestions = parsed.slice(0, 5);
+          controller.close();
+        } catch (error) {
+          console.error('Streaming error:', error);
+          controller.error(error);
         }
-      } catch (parseError) {
-        console.error('Failed to parse suggested questions:', parseError);
-        // Fallback to default questions
-        suggestedQuestions = [
-          "What are my next steps?",
-          "Do I need to consult an attorney?",
-          "What documents should I prepare?",
-          "What is the typical timeline?",
-          "What are the potential costs?",
-        ];
-      }
-    } catch (suggestionError) {
-      console.error('Error generating suggestions:', suggestionError);
-      // Fallback to default questions
-      suggestedQuestions = [
-        "What are my next steps?",
-        "Do I need to consult an attorney?",
-        "What documents should I prepare?",
-        "What is the typical timeline?",
-        "What are the potential costs?",
-      ];
-    }
-
-    return NextResponse.json({
-      response: aiResponse,
-      suggestedQuestions,
-      usage: completion.usage,
+      },
     });
 
+    return new Response(readableStream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+      },
+    });
   } catch (error: any) {
     console.error('OpenAI API error:', error);
 
@@ -150,4 +131,50 @@ Return ONLY a JSON array of 5 question strings, nothing else. Example format: ["
       { status: 500 }
     );
   }
+}
+
+// Helper function to generate suggested questions
+async function generateSuggestedQuestions(messages: any[], aiResponse: string): Promise<string[]> {
+  try {
+    const suggestionPrompt = `基于以下对话，生成5个简短、相关的后续问题，这些问题应该与对话内容相关，并帮助用户探索相关的法律话题或下一步行动。请用简体中文生成问题。
+
+对话内容：
+用户：${messages[messages.length - 1]?.content || ''}
+助手：${aiResponse}
+
+只返回一个包含5个问题字符串的JSON数组，不要返回其他内容。示例格式：["问题1？", "问题2？", "问题3？", "问题4？", "问题5？"]`;
+
+    const suggestionCompletion = await openai.chat.completions.create({
+      model: 'gpt-4-turbo-preview',
+      messages: [
+        { role: 'system', content: '你是一个根据法律对话生成相关后续问题的助手。始终返回有效的JSON数组格式，问题使用简体中文。' },
+        { role: 'user', content: suggestionPrompt },
+      ],
+      temperature: 0.8,
+      max_tokens: 300,
+    });
+
+    const suggestionsText = suggestionCompletion.choices[0]?.message?.content || '[]';
+
+    // Parse the JSON response
+    try {
+      const parsed = JSON.parse(suggestionsText);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.slice(0, 5);
+      }
+    } catch (parseError) {
+      console.error('Failed to parse suggested questions:', parseError);
+    }
+  } catch (suggestionError) {
+    console.error('Error generating suggestions:', suggestionError);
+  }
+
+  // Fallback to default questions in Chinese
+  return [
+    "我的下一步应该怎么做？",
+    "我需要咨询律师吗？",
+    "我应该准备哪些文件？",
+    "通常需要多长时间？",
+    "可能需要多少费用？",
+  ];
 }
