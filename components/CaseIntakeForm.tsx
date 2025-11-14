@@ -94,59 +94,59 @@ export default function CaseIntakeForm() {
   };
 
   return (
-    <section id="get-help" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="get-help" className="py-10 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Left Side - Info */}
           <div>
-            <div className="sticky top-8">
-              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+            <div className="lg:sticky lg:top-8">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
                 Get AI-Powered Legal Help Now
               </h2>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8">
                 Describe your legal issue and receive instant AI analysis, guidance, and next steps.
                 If needed, connect with a licensed attorney.
               </p>
 
               {/* Process Steps */}
-              <div className="space-y-6 mb-8">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
+              <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold shadow-lg text-sm sm:text-base">
                     1
                   </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Submit Your Issue</h3>
-                    <p className="text-gray-600 text-sm">Tell us about your legal situation in your own words</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Submit Your Issue</h3>
+                    <p className="text-gray-600 text-xs sm:text-sm">Tell us about your legal situation in your own words</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold shadow-lg text-sm sm:text-base">
                     2
                   </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 mb-1">AI Analysis</h3>
-                    <p className="text-gray-600 text-sm">Our AI instantly analyzes your case and provides insights</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">AI Analysis</h3>
+                    <p className="text-gray-600 text-xs sm:text-sm">Our AI instantly analyzes your case and provides insights</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold shadow-lg text-sm sm:text-base">
                     3
                   </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Get Guidance</h3>
-                    <p className="text-gray-600 text-sm">Receive actionable legal guidance and document templates</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Get Guidance</h3>
+                    <p className="text-gray-600 text-xs sm:text-sm">Receive actionable legal guidance and document templates</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white font-bold shadow-lg text-sm sm:text-base">
                     4
                   </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 mb-1">Connect with Attorney</h3>
-                    <p className="text-gray-600 text-sm">If needed, get matched with a licensed attorney</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-bold text-gray-900 mb-1 text-sm sm:text-base">Connect with Attorney</h3>
+                    <p className="text-gray-600 text-xs sm:text-sm">If needed, get matched with a licensed attorney</p>
                   </div>
                 </div>
               </div>
@@ -167,17 +167,17 @@ export default function CaseIntakeForm() {
           </div>
 
           {/* Right Side - Form */}
-          <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl p-8 shadow-2xl border-2 border-blue-100">
+          <div className="bg-gradient-to-br from-gray-50 to-blue-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-2xl border-2 border-blue-100">
             {loading ? (
-              <div className="text-center py-12">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl animate-pulse">
-                  <svg className="w-10 h-10 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+              <div className="text-center py-8 sm:py-12">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-xl animate-pulse">
+                  <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white animate-spin" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                   </svg>
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">Analyzing Your Case...</h3>
-                <p className="text-lg text-gray-600">
+                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Analyzing Your Case...</h3>
+                <p className="text-base sm:text-lg text-gray-600">
                   Richard Law AI is reviewing your legal issue and preparing comprehensive guidance.
                 </p>
               </div>
@@ -270,10 +270,10 @@ export default function CaseIntakeForm() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Case Intake Form</h3>
-                  <p className="text-gray-600 text-sm mb-6">All fields are required for best AI analysis</p>
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Case Intake Form</h3>
+                  <p className="text-gray-600 text-xs sm:text-sm mb-4 sm:mb-6">All fields are required for best AI analysis</p>
                 </div>
 
                 {/* Name */}
@@ -394,7 +394,7 @@ export default function CaseIntakeForm() {
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-950 hover:to-blue-800 text-white font-extrabold px-10 py-5 rounded-xl shadow-2xl transition-all duration-300 transform hover:scale-105 border-4 border-blue-700 text-lg tracking-wide uppercase"
+                  className="w-full bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-950 hover:to-blue-800 text-white font-extrabold px-6 sm:px-10 py-4 sm:py-5 rounded-xl shadow-2xl transition-all duration-300 transform hover:scale-105 border-4 border-blue-700 text-base sm:text-lg tracking-wide uppercase"
                 >
                   Get AI Analysis Now
                 </button>

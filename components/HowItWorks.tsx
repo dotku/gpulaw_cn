@@ -47,19 +47,19 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <section id="how-it-works" className="py-10 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             How GPULaw Works
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-2">
             From AI-powered self-service to attorney consultations — your path to legal protection
           </p>
         </div>
 
         {/* Steps */}
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
           {steps.map((step, index) => (
             <div
               key={index}
@@ -70,25 +70,25 @@ export default function HowItWorks() {
                 <div className="hidden lg:block absolute left-[84px] top-[120px] w-1 h-[calc(100%+3rem)] bg-gradient-to-b from-blue-200 to-transparent"></div>
               )}
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-8 items-center">
                 {/* Left: Number and Icon */}
                 <div className="lg:col-span-2 flex flex-col items-center lg:items-start">
-                  <div className={`relative w-40 h-40 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-2xl transform hover:scale-110 transition-all duration-300`}>
-                    <div className="absolute -top-4 -right-4 bg-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl border-4 border-gray-100">
-                      <span className="text-2xl font-black text-gray-900">{step.number}</span>
+                  <div className={`relative w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-xl sm:rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-2xl transform hover:scale-110 transition-all duration-300`}>
+                    <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 bg-white rounded-full w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 flex items-center justify-center shadow-xl border-2 sm:border-4 border-gray-100">
+                      <span className="text-lg sm:text-xl lg:text-2xl font-black text-gray-900">{step.number}</span>
                     </div>
-                    <div className="text-white">
+                    <div className="text-white scale-75 sm:scale-90 lg:scale-100">
                       {step.icon}
                     </div>
                   </div>
                 </div>
 
                 {/* Right: Content */}
-                <div className="lg:col-span-10 bg-gray-50 rounded-2xl p-8 shadow-lg border-2 border-gray-200 hover:border-blue-300 transition-all duration-300">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                <div className="lg:col-span-10 bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border-2 border-gray-200 hover:border-blue-300 transition-all duration-300">
+                  <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 sm:mb-4">
                     {step.title}
                   </h3>
-                  <p className="text-lg text-gray-700 leading-relaxed">
+                  <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
                     {step.description}
                   </p>
 
@@ -117,9 +117,9 @@ export default function HowItWorks() {
                   )}
 
                   {index === 2 && (
-                    <div className="mt-6 flex flex-wrap gap-3">
+                    <div className="mt-4 sm:mt-6 flex flex-wrap gap-2 sm:gap-3">
                       {['Contracts', 'Wills', 'Demand Letters', 'Court Forms', 'Affidavits', 'Notices'].map((doc, i) => (
-                        <span key={i} className="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold border-2 border-green-200">
+                        <span key={i} className="px-3 py-1.5 sm:px-4 sm:py-2 bg-green-100 text-green-800 rounded-full text-xs sm:text-sm font-semibold border-2 border-green-200">
                           {doc}
                         </span>
                       ))}
@@ -132,15 +132,15 @@ export default function HowItWorks() {
         </div>
 
         {/* When to Use AI vs Attorney */}
-        <div className="mt-20 grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 border-2 border-blue-200 shadow-xl">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div className="mt-12 sm:mt-16 lg:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 border-2 border-blue-200 shadow-xl">
+            <div className="flex items-center gap-3 mb-4 sm:mb-6">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900">AI Assistant Best For:</h3>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">AI Assistant Best For:</h3>
             </div>
             <ul className="space-y-3">
               {[
@@ -161,14 +161,14 @@ export default function HowItWorks() {
             </ul>
           </div>
 
-          <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-8 border-2 border-amber-200 shadow-xl">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-amber-600 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+          <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 border-2 border-amber-200 shadow-xl">
+            <div className="flex items-center gap-3 mb-4 sm:mb-6">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-600 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-gray-900">Attorney Needed For:</h3>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">Attorney Needed For:</h3>
             </div>
             <ul className="space-y-3">
               {[

@@ -33,49 +33,49 @@ export default function Hero() {
           </div>
 
           {/* Main Heading */}
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-2">
             Legal Protection Powered by AI,
             <br />
             <span className="text-blue-700">Backed by Real Attorneys</span>
           </h2>
 
-          <p className="text-xl sm:text-2xl text-gray-700 font-medium mb-4 max-w-4xl mx-auto">
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-700 font-medium mb-3 sm:mb-4 max-w-4xl mx-auto px-2">
             Affordable legal membership combining advanced AI tools with experienced lawyers
           </p>
 
-          <p className="text-lg text-gray-600 mb-10 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 mb-8 sm:mb-10 max-w-3xl mx-auto px-2">
             From everyday legal questions to complex cases — get instant AI guidance, document preparation, and attorney consultation when you need it.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-10 sm:mb-12 px-4">
             <a
               href="#membership"
-              className="bg-blue-900 hover:bg-blue-950 text-white font-extrabold px-12 py-5 rounded-xl shadow-2xl transition-all duration-300 transform hover:scale-105 border-4 border-blue-700 text-lg tracking-wide uppercase"
+              className="w-full sm:w-auto bg-blue-900 hover:bg-blue-950 text-white font-extrabold px-8 sm:px-12 py-4 sm:py-5 rounded-xl shadow-2xl transition-all duration-300 transform hover:scale-105 border-4 border-blue-700 text-base sm:text-lg tracking-wide uppercase text-center"
             >
               Join GPULaw Today
             </a>
             <a
               href="#how-it-works"
-              className="bg-white hover:bg-gray-50 text-gray-900 font-extrabold px-12 py-5 rounded-xl shadow-xl border-4 border-gray-900 transition-all duration-300 transform hover:scale-105 text-lg tracking-wide uppercase"
+              className="w-full sm:w-auto bg-white hover:bg-gray-50 text-gray-900 font-extrabold px-8 sm:px-12 py-4 sm:py-5 rounded-xl shadow-xl border-4 border-gray-900 transition-all duration-300 transform hover:scale-105 text-base sm:text-lg tracking-wide uppercase text-center"
             >
               How It Works
             </a>
           </div>
 
           {/* Trust Indicators */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border-2 border-blue-100">
-              <div className="text-4xl font-extrabold text-blue-900 mb-2">24/7</div>
-              <div className="text-sm font-semibold text-gray-700">AI Legal Assistance</div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto px-2">
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg border-2 border-blue-100">
+              <div className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-1 sm:mb-2">24/7</div>
+              <div className="text-xs sm:text-sm font-semibold text-gray-700">AI Legal Assistance</div>
             </div>
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border-2 border-amber-100">
-              <div className="text-4xl font-extrabold text-amber-700 mb-2">Licensed</div>
-              <div className="text-sm font-semibold text-gray-700">Attorneys On-Demand</div>
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg border-2 border-amber-100">
+              <div className="text-3xl sm:text-4xl font-extrabold text-amber-700 mb-1 sm:mb-2">Licensed</div>
+              <div className="text-xs sm:text-sm font-semibold text-gray-700">Attorneys On-Demand</div>
             </div>
-            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-lg border-2 border-green-100">
-              <div className="text-4xl font-extrabold text-green-700 mb-2">6+</div>
-              <div className="text-sm font-semibold text-gray-700">Legal Practice Areas</div>
+            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-lg border-2 border-green-100">
+              <div className="text-3xl sm:text-4xl font-extrabold text-green-700 mb-1 sm:mb-2">6+</div>
+              <div className="text-xs sm:text-sm font-semibold text-gray-700">Legal Practice Areas</div>
             </div>
           </div>
         </div>

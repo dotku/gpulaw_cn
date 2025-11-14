@@ -21,6 +21,14 @@ export default function AIChat() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([
+    "How do I file for divorce?",
+    "What are my rights as a tenant?",
+    "How can I dispute a credit card debt?",
+    "What documents do I need for a will?",
+    "How do I fight a traffic ticket?",
+  ]);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,7 +36,9 @@ export default function AIChat() {
   }, []);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -102,44 +112,44 @@ export default function AIChat() {
   };
 
   return (
-    <section id="chat" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50">
+    <section id="chat" className="py-10 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             Chat with Richard Law AI
           </h2>
-          <p className="text-xl text-gray-600">
+          <p className="text-lg sm:text-xl text-gray-600">
             Get instant legal guidance powered by advanced AI
           </p>
         </div>
 
         {/* Chat Container */}
-        <div className="bg-white rounded-2xl shadow-2xl border-2 border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl border-2 border-gray-200 overflow-hidden">
           {/* Chat Header */}
-          <div className="bg-gradient-to-r from-blue-900 to-blue-700 px-6 py-4 flex items-center gap-4">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-              <svg className="w-7 h-7 text-blue-900" fill="currentColor" viewBox="0 0 20 20">
+          <div className="bg-gradient-to-r from-blue-900 to-blue-700 px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+              <svg className="w-6 h-6 sm:w-7 sm:h-7 text-blue-900" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
               </svg>
             </div>
-            <div>
-              <h3 className="text-white font-bold text-lg">Richard Law AI</h3>
+            <div className="min-w-0 flex-1">
+              <h3 className="text-white font-bold text-base sm:text-lg truncate">Richard Law AI</h3>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <p className="text-blue-100 text-sm">Online • Ready to help</p>
+                <p className="text-blue-100 text-xs sm:text-sm">Online • Ready to help</p>
               </div>
             </div>
           </div>
 
           {/* Messages */}
-          <div className="h-[500px] overflow-y-auto p-6 space-y-4 bg-gray-50">
+          <div ref={messagesContainerRef} className="h-[300px] sm:h-[350px] md:h-[400px] overflow-y-auto p-3 sm:p-4 md:p-6 space-y-3 sm:space-y-4 bg-gray-50">
             {messages.map((message, index) => (
               <div
                 key={index}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-2xl px-6 py-4 ${
+                  className={`max-w-[95%] sm:max-w-[85%] md:max-w-[80%] rounded-xl sm:rounded-2xl px-3 py-3 sm:px-4 sm:py-3 md:px-6 md:py-4 ${
                     message.role === 'user'
                       ? 'bg-gradient-to-r from-blue-900 to-blue-700 text-white'
                       : 'bg-white border-2 border-gray-200 text-gray-800'
@@ -189,46 +199,48 @@ export default function AIChat() {
           </div>
 
           {/* Quick Questions */}
-          {messages.length === 1 && (
-            <div className="px-6 py-4 bg-blue-50 border-t-2 border-gray-200">
-              <p className="text-sm font-semibold text-gray-700 mb-3">Quick questions to get started:</p>
-              <div className="flex flex-wrap gap-2">
-                {quickQuestions.map((question, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleQuickQuestion(question)}
-                    className="bg-white hover:bg-blue-100 border-2 border-blue-200 text-gray-700 text-sm px-4 py-2 rounded-lg transition-all hover:border-blue-400"
-                  >
-                    {question}
-                  </button>
-                ))}
+          <div className="h-[140px] sm:h-[160px] border-t-2 border-gray-200">
+            {messages.length === 1 && (
+              <div className="px-3 py-3 sm:px-4 sm:py-4 md:px-6 md:py-4 bg-blue-50 h-full">
+                <p className="text-xs sm:text-sm font-semibold text-gray-700 mb-2 sm:mb-3">Quick questions to get started:</p>
+                <div className="flex flex-wrap gap-2">
+                  {quickQuestions.map((question, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleQuickQuestion(question)}
+                      className="bg-white hover:bg-blue-100 border-2 border-blue-200 text-gray-700 text-xs sm:text-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-all hover:border-blue-400"
+                    >
+                      {question}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Input Form */}
-          <form onSubmit={handleSubmit} className="p-6 bg-white border-t-2 border-gray-200">
-            <div className="flex gap-4">
+          <form onSubmit={handleSubmit} className="p-3 sm:p-4 md:p-6 bg-white border-t-2 border-gray-200">
+            <div className="flex gap-2 sm:gap-3 md:gap-4">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type your legal question here..."
+                placeholder="Type your legal question..."
                 disabled={loading}
-                className="flex-1 px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all disabled:bg-gray-100"
+                className="flex-1 px-3 py-3 sm:px-4 sm:py-3 md:px-6 md:py-4 border-2 border-gray-300 rounded-lg sm:rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 outline-none transition-all disabled:bg-gray-100 text-sm sm:text-base"
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-950 hover:to-blue-800 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="bg-gradient-to-r from-blue-900 to-blue-700 hover:from-blue-950 hover:to-blue-800 text-white font-bold px-4 sm:px-6 md:px-8 py-3 sm:py-3 md:py-4 rounded-lg sm:rounded-xl shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1 sm:gap-2 flex-shrink-0"
               >
-                <span>Send</span>
+                <span className="hidden sm:inline">Send</span>
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"/>
                 </svg>
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-3 text-center">
+            <p className="text-xs text-gray-500 mt-2 sm:mt-3 text-center leading-relaxed">
               This chat provides general legal information, not legal advice. For personalized guidance, consult with a licensed attorney.
             </p>
           </form>

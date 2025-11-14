@@ -10,11 +10,11 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <Hero />
+      <AIChat />
       <LegalCategories />
       <HowItWorks />
       <Pricing />
       <CaseIntakeForm />
-      <AIChat />
       <Footer />
     </main>
   );
